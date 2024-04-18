@@ -1,3 +1,4 @@
+import 'package:cubit_1/cubit/todo_cubit.dart';
 import 'package:cubit_1/models/todo_model_cubit.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:sqflite/sqflite.dart';
@@ -59,8 +60,17 @@ class DbAppConnection{
     
     return todoList;
     
+  }
+  
+  addTodos({required TodoCubitModel todoCubitModel})async{
+    var db = await getDb();
+    db.insert(TABLE_NAME, todoCubitModel.toMap());
     
-    
+  }
+  
+  deleteTodos(int id)async{
+    var db = await getDb();
+    db.delete(TABLE_NAME, where: '$TABLE_COLUMN_ID = ? ', whereArgs: ['$id'] );
     
   }
   
