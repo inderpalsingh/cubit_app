@@ -78,11 +78,13 @@ class DbAppConnection {
     db.delete(TABLE_NAME, where: "$TABLE_COLUMN_ID = ?", whereArgs: ['$id']);
   }
 
-  updateTodo({
-    required TodoModel todoModel,
-  }) async {
+  Future<bool> updateTodo({ required TodoModel todoModel}) async {
     var db = await getDb();
-    db.update(TABLE_NAME, todoModel.toMap(),
-        where: '$TABLE_COLUMN_ID =?', whereArgs: ['${todoModel.id}']);
+    var checkDb = await db.update(TABLE_NAME, todoModel.toMap(),where: '$TABLE_COLUMN_ID =?', whereArgs: ['${todoModel.id}']);
+    return checkDb>0;
   }
+
+ 
+  
+  
 }

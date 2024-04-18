@@ -11,7 +11,9 @@ class TodoCubit extends Cubit<TodoDBState> {
 
 
    ///// events
-  
+
+
+  //// fetch todos
    void getInitialTodos()async{
 
     emit(LoadingState());
@@ -21,7 +23,7 @@ class TodoCubit extends Cubit<TodoDBState> {
    }
 
 
-
+   //// add todos
    void addNote({required TodoModel newTodoModel}) async {
 
     emit(LoadingState());
@@ -49,6 +51,19 @@ class TodoCubit extends Cubit<TodoDBState> {
      emit(SuccessfulState(allTodoStates: mData));
  
    }
+   
+   //// edit todos
+   
+   Future<bool> editTodo({required TodoModel updateTodoModel})async{
+     emit(LoadingState());
+     List<TodoModel> mData =  await db.getAllTodoList();
+     var editTodo = await db.updateTodo(todoModel: updateTodoModel);
+     // emit(FailureState(errorMsg: 'Todo not updated'));
+     emit(SuccessfulState(allTodoStates: mData));
+     
+     return editTodo;
+   }
 
+  
 
 }

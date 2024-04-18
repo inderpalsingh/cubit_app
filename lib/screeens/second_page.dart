@@ -4,12 +4,20 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class SecondPage extends StatelessWidget {
-  const SecondPage({super.key});
+  bool isUpdate;
+  TodoModel? updateTodoModel;
+  SecondPage({super.key, this.isUpdate = false, this.updateTodoModel});
+
+  TextEditingController titleController = TextEditingController();
+  TextEditingController descController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
-    TextEditingController titleController = TextEditingController();
-    TextEditingController descController = TextEditingController();
+    if (updateTodoModel != null) {
+      titleController.text = updateTodoModel!.title;
+      descController.text = updateTodoModel!.desc;
+    }
+
     return Scaffold(
       body: Padding(
         padding: const EdgeInsets.all(30.0),
@@ -31,20 +39,30 @@ class SecondPage extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
-                ElevatedButton(onPressed: () {
-                  context.read<TodoCubit>().addNote(
-                      newTodoModel: TodoModel(title: titleController.text, desc: descController.text)
-                  );
-                  Navigator.pop(context);
-                }, child: const Text('Add')),
-
-                ElevatedButton(onPressed: () {
-                  Navigator.pop(context);
-                }, child: const Text('Cancel')),
+                ElevatedButton(
+                    onPressed: () {
+                      if (!isUpdate) {
+                        context.read<TodoCubit>().addNote(
+                            newTodoModel: TodoModel(
+                                title: titleController.text,
+                                desc: descController.text));
+                      } else {
+                        context.read<TodoCubit>().editTodo(
+                            updateTodoModel: TodoModel(
+                                id: updateTodoModel!.id,
+                                title: updateTodoModel!.title,
+                                desc: updateTodoModel!.desc));
+                      }
+                      Navigator.pop(context);
+                    },
+                    child: Text(isUpdate ? 'Update Todos' : 'Add Todos')),
+                ElevatedButton(
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
+                    child: const Text('Cancel')),
               ],
             ),
-
-            
           ],
         ),
       ),
