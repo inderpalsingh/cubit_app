@@ -25,18 +25,29 @@ class TodoCubit extends Cubit<TodoDBState> {
    void addNote({required TodoModel newTodoModel}) async {
 
     emit(LoadingState());
-    
-    //bool isTodoAdded =  await db.addTodo(todoModel: newTodoModel);
-    int isTodoAdded =  await db.addTodo(todoModel: newTodoModel);
 
-    if(isTodoAdded>0){
+    // int isTodoAdded =  await db.addTodo(todoModel: newTodoModel);
+    bool isTodoAdded =  await db.addTodo(todoModel: newTodoModel);
+    
+
+    if(isTodoAdded){
 
       List<TodoModel> allTodos = await db.getAllTodoList();
       emit(SuccessfulState(allTodoStates: allTodos));
     }else{
-      emit(FailerState(errorMsg: "Todo not addedd"));
+      emit(FailureState(errorMsg: "Todo not added"));
     }
 
+   }
+   
+   /// delete
+   void deleteNote({required int id})async{
+      
+     emit(LoadingState());
+     await db.deleteTodo(id);
+     List<TodoModel> mData =  await db.getAllTodoList();
+     emit(SuccessfulState(allTodoStates: mData));
+ 
    }
 
 

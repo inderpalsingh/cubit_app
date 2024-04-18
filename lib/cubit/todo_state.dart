@@ -11,7 +11,7 @@ class SuccessfulState extends TodoDBState{
   SuccessfulState({required this.allTodoStates});
 }
 
-class FailerState extends TodoDBState{
+class FailureState extends TodoDBState{
   String errorMsg;
-  FailerState({required this.errorMsg});
+  FailureState({required this.errorMsg});
 }

@@ -1,3 +1,5 @@
+import 'dart:ffi';
+
 import 'package:cubit_1/models/todo_model_cubit.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:sqflite/sqflite.dart';
@@ -54,10 +56,10 @@ class DbAppConnection {
   }
 
   
-   Future<int>addTodo({required TodoModel todoModel}) async {
+   Future<bool> addTodo({required TodoModel todoModel}) async {
     var db = await getDb();
-    var checkDb = db.insert(TABLE_NAME, todoModel.toMap()); //// checkDB =>  show me how many rows effected
-    return checkDb;
+    var checkDb = await db.insert(TABLE_NAME, todoModel.toMap()); //// checkDB =>  show me how many rows effected
+    return checkDb>0;
     
   }
  
