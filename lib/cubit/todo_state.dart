@@ -1,23 +1,17 @@
-import '../db/db_connection.dart';
 import '../models/todo_model_cubit.dart';
 
-class TodoCubitState {
-  DbAppConnection? cubitDatabase;
-  
-  
-  List<TodoCubitModel> todoModel = [];
+abstract class TodoDBState{}
 
-  TodoCubitState({required this.todoModel});
-  
-  List<TodoCubitModel> _listTodos = [];
+class InitialState extends TodoDBState{}
 
-  List<TodoCubitModel> fetchTodos(){
-    return _listTodos;
-  }
+class LoadingState extends TodoDBState{}
 
-  //// add
-  void addTodoCubit({required TodoCubitModel todoCubitModel}) async {
-    cubitDatabase?.addTodos(todoCubitModel: todoCubitModel);
-    _listTodos = await cubitDatabase.getAllTodoList();
-  }
+class SuccessfulState extends TodoDBState{
+  List<TodoModel> allTodoStates;
+  SuccessfulState({required this.allTodoStates});
+}
+
+class FailerState extends TodoDBState{
+  String errorMsg;
+  FailerState({required this.errorMsg});
 }
