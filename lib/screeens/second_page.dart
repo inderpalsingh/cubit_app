@@ -47,11 +47,11 @@ class SecondPage extends StatelessWidget {
                                 title: titleController.text,
                                 desc: descController.text));
                       } else {
-                        context.read<TodoCubit>().editTodo(
+                        context.read<TodoCubit>().updateTodo(
                             updateTodoModel: TodoModel(
                                 id: updateTodoModel!.id,
-                                title: updateTodoModel!.title,
-                                desc: updateTodoModel!.desc));
+                                title: titleController.text,
+                                desc: descController.text));
                       }
                       Navigator.pop(context);
                     },

@@ -78,9 +78,9 @@ class DbAppConnection {
     db.delete(TABLE_NAME, where: "$TABLE_COLUMN_ID = ?", whereArgs: ['$id']);
   }
 
-  Future<bool> updateTodo({ required TodoModel todoModel}) async {
+  Future<bool> updateTodo({ required TodoModel updateTodoModel}) async {
     var db = await getDb();
-    int checkDb = await db.update(TABLE_NAME, todoModel.toMap(),where: '$TABLE_COLUMN_ID =?', whereArgs: ['${todoModel.id}']);
+    int checkDb = await db.update(TABLE_NAME, updateTodoModel.toMap(),where: '$TABLE_COLUMN_ID =?', whereArgs: ['${updateTodoModel.id}']);
     return checkDb>0;
   }
 

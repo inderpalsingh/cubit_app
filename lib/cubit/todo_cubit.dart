@@ -54,10 +54,10 @@ class TodoCubit extends Cubit<TodoDBState> {
    
    //// edit todos
    
-   void editTodo({required TodoModel updateTodoModel})async{
+   void updateTodo({required TodoModel updateTodoModel})async{
      emit(LoadingState());
      
-     bool isTodoUpdate = await db.updateTodo(todoModel: updateTodoModel);
+     bool isTodoUpdate = await db.updateTodo(updateTodoModel: updateTodoModel);
      //
      if(isTodoUpdate){
        List<TodoModel> mData =  await db.getAllTodoList();
