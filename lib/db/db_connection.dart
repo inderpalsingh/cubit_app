@@ -80,7 +80,7 @@ class DbAppConnection {
 
   Future<bool> updateTodo({ required TodoModel todoModel}) async {
     var db = await getDb();
-    var checkDb = await db.update(TABLE_NAME, todoModel.toMap(),where: '$TABLE_COLUMN_ID =?', whereArgs: ['${todoModel.id}']);
+    int checkDb = await db.update(TABLE_NAME, todoModel.toMap(),where: '$TABLE_COLUMN_ID =?', whereArgs: ['${todoModel.id}']);
     return checkDb>0;
   }
 
